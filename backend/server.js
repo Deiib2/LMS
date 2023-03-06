@@ -5,6 +5,7 @@ dotenv.config()
 const app = express()
 const mongoose = require('mongoose')
 const librarianRoutes = require('./routes/librarianRoutes')
+const readerRoutes = require('./routes/readerRoutes')
 app.use(express.json())
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -18,3 +19,4 @@ app.listen(process.env.PORT, () => {
 .catch(err => console.log(err));
 
 app.use('/api/librarian', librarianRoutes)
+app.use('/api/reader', readerRoutes)
