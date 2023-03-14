@@ -17,20 +17,24 @@ const itemSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    borrowed: {
-        type: Boolean,
+    totalCopies: {
+        type: Number,
         required: true,
-        default: false
     },
-    borrowedBy: {
+    borrowedCopies: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    borrowedBy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Reader',
         required: false
-    },
-    returnDate: {
-        type: Date,
-        required: false
-    }
+    }],
+    // returnDate: {
+    //     type: Date,
+    //     required: false
+    // }
 }, {timestamps: true})
 
 module.exports = mongoose.model('Item', itemSchema)
