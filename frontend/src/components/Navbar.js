@@ -1,8 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {FaSignInAlt, FaUser, FaSignOutAlt} from 'react-icons/fa';
-import { Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useLogout } from '../hooks/useLogout';
 
 const Navbar = () => {
+    const {user} = useAuthContext();
+    const {logout} = useLogout();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        logout();
+    }
+    const handleLogin = () => {
+        navigate('/login');
+    }
     return (
         <header className='header'>
             <div className='container'>
@@ -14,11 +25,16 @@ const Navbar = () => {
                     <Link to="/explore">
                         Explore
                     </Link>
-                    <Link to="/createitem">
+                    { user && user.type==="librarian" && <Link to="/createitem">
                         <Typography variant="h6" sx={{color: 'white'}} >
                             Create an Item
                         </Typography>
-                    </Link>
+                    </Link>}
+                    { user && user.type==="librarian" && <Link to="/registeruser">
+                        <Typography variant="h6" sx={{color: 'white'}} >
+                            Register User
+                        </Typography>
+                    </Link>}
                     </Stack>
                     </Stack>
             {/* <ul>
@@ -26,9 +42,14 @@ const Navbar = () => {
                     <Link to="/login">Login</Link>
                 </li>
             </ul> */}
-            <Link to="/login">
+            {!user &&
+            <Button onClick={handleLogin} sx={{ color: '#fff'}}>
                 <FaSignInAlt/> Login
-            </Link>
+            </Button>}
+            {user &&
+            <Button onClick={handleLogout} sx={{ color: '#fff'}}>
+                <FaSignOutAlt/> Logout
+            </Button>}
             </div>
 
         </header>

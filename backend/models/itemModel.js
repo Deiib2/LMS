@@ -37,4 +37,23 @@ const itemSchema = mongoose.Schema({
     // }
 }, {timestamps: true})
 
-module.exports = mongoose.model('Item', itemSchema)
+const borrowedItemScheme = mongoose.Schema({
+    itemId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+        required: true
+    },
+    readerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Reader',
+        required: true
+    },
+    returnDate: {
+        type: Date,
+        required: true
+    },
+}, {timestamps: true})
+
+const item = mongoose.model('Item', itemSchema)
+const borrowedItem = mongoose.model('BorrowedItem', borrowedItemScheme)
+module.exports = {item, borrowedItem}

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const Librarian = require('../models/librarianModel')
-const Item = require('../models/itemModel')
+const Item = require('../models/itemModel').item
+const BorrowedItem = require('../models/itemModel').borrowedItem
 const User = require('../models/userModel')
 const Reader = require('../models/readerModel')
 
@@ -97,14 +98,14 @@ const setBorrowed = async (req, res) => {
     try{
         const item = await Item.findById(itemId)
         const reader = await Reader.findById(readerId)
+        console.log(item)
         if(item.borrowedCopies+1 === item.totalCopies)
             return res.status(401).json({error: 'Only 1 more copy available, Cannot be lent'})
-        console.log(reader.currentBorrowedItem)
-        if(reader.currentBorrowedItem !== null && reader.currentBorrowedItem !== undefined)
-            return res.status(401).json({error: 'Reader cannot borrow more than 1 item at a time'})
+        if(item.borrowedBy.includes(readerId,0))
+            return res.status(401).json({error: 'User is currently borrowing this item'})
         const item2 = await Item.findByIdAndUpdate(itemId, {borrowedCopies: item.borrowedCopies+1, $push:{borrowedBy: readerId}})
-        const reader2 = await Reader.findByIdAndUpdate(readerId, {currentBorrowedItem: itemId, returnDate})
-        res.status(200).json({item2, reader2})
+        const item3 = await BorrowedItem.create({itemId, readerId, returnDate})
+        res.status(200).json({item3})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -113,7 +114,11 @@ const setReturned = async (req, res) => {
     const {readerId, itemId} = req.body;
     try{
         const item = await Item.findByIdAndUpdate(itemId, {$inc: {borrowedCopies: -1}, $pull: {borrowedBy: readerId}})
-        const reader = await Reader.findByIdAndUpdate(readerId, {$push: {pastBorrowedItems: itemId},currentBorrowedItem: null, returnDate: null})
+        const borrowedItem = await BorrowedItem.findOneAndDelete({itemId, readerId})
+        if(!borrowedItem)
+            res.status(404).json({error: 'reader is not curently borrowing this item'})
+        console.log(borrowedItem)
+        const reader = await Reader.findByIdAndUpdate(readerId, {$push: {pastBorrowedItems: itemId}})
         res.status(200).json({item, reader})
     } catch (error) {
         res.status(400).json({error: error.message})

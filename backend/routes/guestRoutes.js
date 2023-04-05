@@ -1,10 +1,12 @@
 const express = require('express')
 const {
-    getAllItems
+    getAllItems,
+    search
     } = require('../controllers/guestController')
 
 const router = express.Router()
 
 router.get('/allItems', getAllItems)
+router.post('/search', search)
 
 module.exports = router

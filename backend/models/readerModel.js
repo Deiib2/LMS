@@ -10,19 +10,10 @@ const readerSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    currentBorrowedItem: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Item'
-    },
     pastBorrowedItems: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
-    }],
-    returnDate: {
-        type: Date,
-        required: false
-    },
+    }]
 }, {timestamps: true})
 
 module.exports = mongoose.model('Reader', readerSchema)
