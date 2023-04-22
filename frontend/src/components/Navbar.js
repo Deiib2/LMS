@@ -10,6 +10,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
         logout();
+        navigate('/')
     }
     const handleLogin = () => {
         navigate('/login');
@@ -35,6 +36,19 @@ const Navbar = () => {
                             Register User
                         </Typography>
                     </Link>}
+                    { user && user.type === "reader" && <Link to="/myitems">
+                        <Typography variant="h6" sx={{color: 'white'}} >
+                            My Items
+                        </Typography>
+                    </Link>
+                    }
+                    {
+                        user && (user.type === "librarian" || user.type === "admin") && <Link to="/lend">
+                            <Typography variant="h6" sx={{color: 'white'}} >
+                                Lend
+                            </Typography>
+                        </Link>
+                    }
                     </Stack>
                     </Stack>
             {/* <ul>

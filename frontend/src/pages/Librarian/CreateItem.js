@@ -42,7 +42,7 @@ const CreateItem = () => {
     }
     return(
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
-            <Paper elevation={3} sx={{padding: '2rem', width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <Paper elevation={3} sx={{padding: '2rem', width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderRadius: '20px'}}>
                 <Typography variant='h3' sx={{marginBottom: '1rem'}}>Create a new Item</Typography>
                 <Stack spacing={2} sx={{width: '100%'}}>
                     <TextField 

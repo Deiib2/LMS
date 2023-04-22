@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import CreateItem from "./pages/Librarian/CreateItem";
 import RegisterUser from "./pages/Librarian/RegisterUser";
 import MyItems from "./pages/Reader/MyItems";
+import Lend from "./pages/Librarian/Lend";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/createitem" element={<CreateItem />} />
           <Route path="/registeruser" element={<RegisterUser />} />
           <Route path="/myitems" element={<MyItems />} />
+          <Route path="/lend" element={<Lend />} />
         </Routes>
       </div>
       </BrowserRouter>

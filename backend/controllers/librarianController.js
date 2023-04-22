@@ -124,6 +124,17 @@ const setReturned = async (req, res) => {
         res.status(400).json({error: error.message})
     }
 }
+const getReader = async (req, res) => {
+    const {readerId} = req.params;
+    try{
+        const reader = await Reader.findById(readerId)
+        if(!reader)
+            res.status(404).json({error: 'reader not found'})
+        res.status(200).json(reader)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 module.exports = {
     createNewItem,
@@ -133,5 +144,6 @@ module.exports = {
     getAllLibrarians,
     getAllReaders,
     setBorrowed,
-    setReturned
+    setReturned,
+    getReader
 }

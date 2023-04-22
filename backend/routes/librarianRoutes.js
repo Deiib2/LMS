@@ -7,7 +7,8 @@ const {
     getAllLibrarians,
     getAllReaders,
     setBorrowed,
-    setReturned
+    setReturned,
+    getReader
     } = require('../controllers/librarianController')
 
 const router = express.Router()
@@ -20,5 +21,6 @@ router.get('/allLibrarians', getAllLibrarians)
 router.get('/allReaders', getAllReaders)
 router.put('/setBorrowed', setBorrowed)
 router.put('/setReturned', setReturned)
+router.get('/getReader/:readerId', getReader)
 
 module.exports = router

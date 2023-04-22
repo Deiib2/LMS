@@ -1,7 +1,7 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useState, useEffect } from "react";
-import { Box, Grid, Alert, CircularProgress } from "@mui/material";
-import ItemCard from "../../components/ItemCard";
+import { Box, Grid, Alert, CircularProgress, Typography } from "@mui/material";
+import BorrowedItemCard from "../../components/BorrowedItemCard";
 const MyItems = () => {
     const { user } = useAuthContext()
     const [items, setItems] = useState([])
@@ -30,13 +30,16 @@ const MyItems = () => {
         getItems()
     }, [user])
     return (
-        <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', paddingTop: '15px' }}>
+        <Box sx={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', paddingTop:'15px', paddingX:'10px'}}>
             {loading && <CircularProgress size='5rem' />}
             {error && <Alert severity='error'>{error}</Alert>}
             <Grid container spacing={2}>
-                <Grid item xs={3}>
-                    {items.map(item => <ItemCard item={item} />)}
-                </Grid>
+                {items.map(item => (
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                        <BorrowedItemCard item={item}/>
+                        <Typography variant='h6'>{item.title}</Typography>
+                    </Grid>
+                ))}
             </Grid>
         </Box>
     )
