@@ -15,7 +15,7 @@ const getAllItems = async (req, res) => {
 const search = async (req, res) => {
     const {title, author} = req.body
     try{
-        const items = await Item.find().or([{title: title}, {author: author}])
+        const items = await Item.find().or([{title: {$regex: title}}, {author: {$regex: author}}])
         res.status(200).json(items)
     } catch (error) {
         res.status(400).json({error: error.message})

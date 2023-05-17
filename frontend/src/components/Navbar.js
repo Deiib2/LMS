@@ -49,6 +49,13 @@ const Navbar = () => {
                             </Typography>
                         </Link>
                     }
+                    {
+                        user && (user.type === "librarian" || user.type === "admin") && <Link to="/extensionrequests">
+                            <Typography variant="h6" sx={{color: 'white'}} >
+                                Extension Requests
+                            </Typography>
+                        </Link>
+                    }
                     </Stack>
                     </Stack>
             {/* <ul>

@@ -40,9 +40,26 @@ const getDueDate = async (req, res) => {
         res.status(400).json({error: error.message})
     }
 }
+const requestExtension = async (req, res) => {
+    const {itemId, newDate} = req.body
+    const readerId = req.user._id
+    if(!mongoose.Types.ObjectId.isValid(itemId)){
+        return res.status(400).json({error: 'wrong item id'})
+    }
+    if(!mongoose.Types.ObjectId.isValid(readerId)){
+        return res.status(400).json({error: 'wrong reader id'})
+    }
+    try{
+        const item = await BorrowedItem.findOneAndUpdate({itemId, readerId}, {extensionRequest: true, extensionDate: newDate})
+        res.status(200).json(item)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 module.exports = {
     getAllItems,
     getCurrentlyBorrowedItems,
-    getDueDate
+    getDueDate,
+    requestExtension
 }

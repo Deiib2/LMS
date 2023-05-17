@@ -7,6 +7,7 @@ import CreateItem from "./pages/Librarian/CreateItem";
 import RegisterUser from "./pages/Librarian/RegisterUser";
 import MyItems from "./pages/Reader/MyItems";
 import Lend from "./pages/Librarian/Lend";
+import ExtensionRequests from "./pages/Librarian/ExtensionRequests";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/registeruser" element={<RegisterUser />} />
           <Route path="/myitems" element={<MyItems />} />
           <Route path="/lend" element={<Lend />} />
+          <Route path="/extensionrequests" element={<ExtensionRequests />} />
         </Routes>
       </div>
       </BrowserRouter>

@@ -2,7 +2,8 @@ const express = require('express')
 const {
     getAllItems,
     getCurrentlyBorrowedItems,
-    getDueDate
+    getDueDate,
+    requestExtension
     } = require('../controllers/readerController')
 
 const requireAuthReader = require('../middleware/requireAuthReader')
@@ -14,5 +15,6 @@ router.use(requireAuthReader)
 router.get('/allItems', getAllItems)
 router.get('/currentBorrowedItems', getCurrentlyBorrowedItems)
 router.get('/getDueDate/:itemId', getDueDate)
+router.post('/requestExtension', requestExtension)
 
 module.exports = router

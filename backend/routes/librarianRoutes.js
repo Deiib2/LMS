@@ -8,7 +8,11 @@ const {
     getAllReaders,
     setBorrowed,
     setReturned,
-    getReader
+    getReader,
+    getAllExtensionRequests,
+    grantExtension,
+    denyExtension,
+    getItemById
     } = require('../controllers/librarianController')
 
 const router = express.Router()
@@ -22,5 +26,9 @@ router.get('/allReaders', getAllReaders)
 router.put('/setBorrowed', setBorrowed)
 router.put('/setReturned', setReturned)
 router.get('/getReader/:readerId', getReader)
+router.get('/getAllExtensionRequests', getAllExtensionRequests)
+router.put('/grantExtension', grantExtension)
+router.put('/denyExtension', denyExtension)
+router.get('/getItem/:itemId', getItemById)
 
 module.exports = router

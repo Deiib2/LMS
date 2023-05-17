@@ -31,13 +31,9 @@ const itemSchema = mongoose.Schema({
         ref: 'Reader',
         required: false
     }],
-    // returnDate: {
-    //     type: Date,
-    //     required: false
-    // }
 }, {timestamps: true})
 
-const borrowedItemScheme = mongoose.Schema({
+const borrowedItemSchema = mongoose.Schema({
     itemId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item',
@@ -52,8 +48,16 @@ const borrowedItemScheme = mongoose.Schema({
         type: Date,
         required: true
     },
+    extensionRequest: {
+        type: Boolean,
+        default: false
+    },
+    extensionDate: {
+        type: Date,
+        required: false
+    },
 }, {timestamps: true})
 
 const item = mongoose.model('Item', itemSchema)
-const borrowedItem = mongoose.model('BorrowedItem', borrowedItemScheme)
+const borrowedItem = mongoose.model('BorrowedItem', borrowedItemSchema)
 module.exports = {item, borrowedItem}

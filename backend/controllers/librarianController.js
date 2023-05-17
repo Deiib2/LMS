@@ -135,6 +135,56 @@ const getReader = async (req, res) => {
         res.status(400).json({error: error.message})
     }
 }
+const getAllExtensionRequests = async (req, res) => {
+    try{
+        const extensionRequests = await BorrowedItem.find({extensionRequest: true})
+        if(!extensionRequests)
+            res.status(404).json({error: 'No extension requests found'})
+        res.status(200).json(extensionRequests)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+const grantExtension = async (req, res) => {
+    const {borrowedId, newDate} = req.body
+    if(!mongoose.Types.ObjectId.isValid(borrowedId))
+        return res.status(401).json({error: 'Invalid borrowed item ID'})
+    try{
+        const extensionRequest = await BorrowedItem.findByIdAndUpdate(borrowedId, {returnDate: newDate, extensionRequest: false, extensionDate: null})
+        if(!extensionRequest)
+            res.status(404).json({error: 'Extension request not found'})
+        res.status(200).json(extensionRequest)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+const denyExtension = async (req, res) => {
+    const {borrowedId} = req.body
+    if(!mongoose.Types.ObjectId.isValid(borrowedId))
+        return res.status(401).json({error: 'Invalid borrowed item ID'})
+    try{
+        const extensionRequest = await BorrowedItem.findByIdAndUpdate(borrowedId, {extensionRequest: false, extensionDate: null})
+        if(!extensionRequest)
+            res.status(404).json({error: 'Extension request not found'})
+        res.status(200).json(extensionRequest)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+const getItemById = async (req, res) => {
+    const {itemId} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(itemId))
+        return res.status(401).json({error: 'Invalid item ID'})
+    try{
+        const item = await Item.findById(itemId)
+        console.log(item)
+        if(!item)
+            res.status(404).json({error: 'Item not found'})
+        res.status(200).json(item)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 module.exports = {
     createNewItem,
@@ -145,5 +195,9 @@ module.exports = {
     getAllReaders,
     setBorrowed,
     setReturned,
-    getReader
+    getReader,
+    getAllExtensionRequests,
+    grantExtension,
+    denyExtension,
+    getItemById
 }
