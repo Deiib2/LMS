@@ -1,6 +1,8 @@
-import { Box, Grid, CircularProgress, Alert, TextField } from "@mui/material"
+import { Box, Grid, CircularProgress, Alert, InputLabel, TextField } from "@mui/material"
 import { useState, useEffect } from "react"
 import ItemCard from "../components/ItemCard"
+import { FaSearch } from "react-icons/fa"
+import { InputAdornment } from "@mui/material"
 
 const Explore = () => {
     const [items, setItems] = useState([])
@@ -51,20 +53,23 @@ const Explore = () => {
         <Box sx={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', paddingTop:'15px'}}>
         <TextField 
             value={search} 
-            label='Search' 
+            label='Search'
             variant='outlined' 
-            sx={{backgroundColor: 'white', width: '50%'}}
+            sx={{backgroundColor: 'white', width: '50%', mb: 3}}
             onChange={(e) => setSearch(e.target.value)}
+            
             />
             {loading && <CircularProgress size='5rem'/>}
             {error && <Alert severity='error'>{error}</Alert>}
+            <Box sx={{width: '75%'}}>
         <Grid container spacing={2} padding={2}>
             {items && items.map(item => (
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     <ItemCard item={item}/>
                 </Grid>
             ))}
         </Grid>
+        </Box>
         
             
         </Box>

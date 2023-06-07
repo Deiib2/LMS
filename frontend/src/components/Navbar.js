@@ -19,39 +19,41 @@ const Navbar = () => {
         <header className='header'>
             <div className='container'>
             <Stack direction="row" spacing={10}>
-                <Link to="/"><Typography variant="h4" sx={{color: 'white'}} >
+                <Link to="/"><Typography variant="h4" sx={{color: 'black', fontFamily: 'Poppins', fontWeight: '500'}} >
                         LibraryMS
                     </Typography></Link>
-                <Stack direction="row" spacing={2}>
+                <Stack direction="row" spacing={4}>
                     <Link to="/explore">
-                        Explore
+                        <Typography variant="h6" sx={{color: 'black', fontFamily: 'Poppins'}}>
+                            Explore
+                        </Typography>
                     </Link>
                     { user && user.type==="librarian" && <Link to="/createitem">
-                        <Typography variant="h6" sx={{color: 'white'}} >
+                        <Typography variant="h6" sx={{color: 'black', fontFamily:'Poppins'}} >
                             Create an Item
                         </Typography>
                     </Link>}
                     { user && user.type==="librarian" && <Link to="/registeruser">
-                        <Typography variant="h6" sx={{color: 'white'}} >
+                        <Typography variant="h6" sx={{color: 'black', fontFamily:'Poppins'}} >
                             Register User
                         </Typography>
                     </Link>}
                     { user && user.type === "reader" && <Link to="/myitems">
-                        <Typography variant="h6" sx={{color: 'white'}} >
+                        <Typography variant="h6" sx={{color: 'black', fontFamily:'Poppins'}} >
                             My Items
                         </Typography>
                     </Link>
                     }
                     {
                         user && (user.type === "librarian" || user.type === "admin") && <Link to="/lend">
-                            <Typography variant="h6" sx={{color: 'white'}} >
+                            <Typography variant="h6" sx={{color: 'black', fontFamily:'Poppins'}} >
                                 Lend
                             </Typography>
                         </Link>
                     }
                     {
                         user && (user.type === "librarian" || user.type === "admin") && <Link to="/extensionrequests">
-                            <Typography variant="h6" sx={{color: 'white'}} >
+                            <Typography variant="h6" sx={{color: 'black', fontFamily:'Poppins'}} >
                                 Extension Requests
                             </Typography>
                         </Link>
@@ -65,11 +67,11 @@ const Navbar = () => {
             </ul> */}
             {!user &&
             <Button onClick={handleLogin} sx={{ color: '#fff'}}>
-                <FaSignInAlt/> Login
+                <FaSignInAlt color='black'/> <Typography variant='body' sx={{color:'black', fontFamily:'Poppins', pl:'5px'}}> Login</Typography>
             </Button>}
             {user &&
             <Button onClick={handleLogout} sx={{ color: '#fff'}}>
-                <FaSignOutAlt/> Logout
+                <FaSignOutAlt color='black'/> <Typography variant='body' sx={{color:'black', fontFamily:'Poppins', pl:'5px'}}> Logout</Typography>
             </Button>}
             </div>
 

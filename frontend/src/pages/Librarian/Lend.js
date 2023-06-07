@@ -205,6 +205,7 @@ const handleThirdStep = async () => {
       ) : (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          <Box sx={{minHeight: '300px', width: '100%', }}>
           {
                 activeStep === 0 &&
                 <Box sx={{width: '100%', alignItems:'center', 
@@ -215,6 +216,7 @@ const handleThirdStep = async () => {
                 onChange={(e) => setItem(e.target.value)}
                 required
                 value={item}
+                sx={{backgroundColor: 'white'}}
                 />
                 </Box>
             }
@@ -287,6 +289,7 @@ const handleThirdStep = async () => {
                     </Box>
                 </Box>
             }
+            </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"

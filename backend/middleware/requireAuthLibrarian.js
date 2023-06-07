@@ -11,7 +11,7 @@ const requireAuthLibrarian = async (req, res, next) => {
         const {_id} = jwt.verify(token,process.env.SECRET)
         const {Type} = await User.findOne({_id}).select('type')
         if(Type !== 'librarian' )
-            return res.status(401).json({error:'Only Librarians can access'})
+            return res.status(401).json({error:'Only Librarians can access this functionality'})
         req.user = await User.findOne({_id}).select('_id')
         next()
     }

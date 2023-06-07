@@ -147,6 +147,7 @@ const getAllExtensionRequests = async (req, res) => {
 }
 const grantExtension = async (req, res) => {
     const {borrowedId, newDate} = req.body
+    console.log(req.body)
     if(!mongoose.Types.ObjectId.isValid(borrowedId))
         return res.status(401).json({error: 'Invalid borrowed item ID'})
     try{
@@ -185,6 +186,19 @@ const getItemById = async (req, res) => {
         res.status(400).json({error: error.message})
     }
 }
+const getUserEmail = async (req, res) => {
+    const {userId} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(userId))
+        return res.status(401).json({error: 'Invalid user ID'})
+    try{
+        const user = await User.findOne({_id: userId})
+        if(!user)
+            res.status(404).json({error: 'User not found'})
+        res.status(200).json(user.email)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 module.exports = {
     createNewItem,
@@ -199,5 +213,6 @@ module.exports = {
     getAllExtensionRequests,
     grantExtension,
     denyExtension,
-    getItemById
+    getItemById,
+    getUserEmail
 }
