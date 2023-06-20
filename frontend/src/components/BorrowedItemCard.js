@@ -78,12 +78,20 @@ const BorrowedItemCard = ({item}) => {
                 <Typography gutterBottom variant="h5" component="div">
                     {item.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{
+                // overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+              }}>
+                    {/* {isExpanded ? item.description : `${item.description.slice(0, 170)}...`} */}
                     {item.description}
                 </Typography>
+                {/* {isOverflown && (
+                <Button onClick={toggleExpanded} size="small" color="primary">
+                  {isExpanded ? 'Read Less' : 'Read More'}
+                </Button>)} */}
                 <Typography variant="body2" color="text.secondary">
                     Author: {item.author}
                 </Typography>
+                
                 <Typography variant="body2" color="#ffaaaa">
                     Due date: {dueDate.substring(0,10)}
                 </Typography>
@@ -91,10 +99,8 @@ const BorrowedItemCard = ({item}) => {
                 {error && <Alert severity="error">{error}</Alert>}
             </CardContent>
             <CardActions>
-                <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-                    <IconButton size="small">
-                        <FavoriteIcon />
-                    </IconButton>
+                <Box sx={{display: 'flex', justifyContent: 'end', width: '100%'}}>
+                   
                     <Button size="small"
                         id="basic-button"
                         aria-controls={open ? 'basic-menu' : undefined}

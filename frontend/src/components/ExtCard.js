@@ -7,6 +7,7 @@ const ExtCard = ({ borrowedItem }) => {
     const [newDueDate, setNewDueDate] = useState(borrowedItem.extensionDate)
     const [itemName, setItemName] = useState('')
     const [readerName, setReaderName] = useState('')
+    const [readerEmail, setReaderEmail] = useState('')
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -28,6 +29,20 @@ const ExtCard = ({ borrowedItem }) => {
                 setError(json)
             }
         }
+        const getEmail = async () => {
+            const response = await fetch(`/api/librarian/getUserEmail/${borrowedItem.readerId}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setReaderEmail(json)
+            }
+            if (!response.ok) {
+                setError(json)
+            }
+        }
         const getItem = async () => {
             const response = await fetch(`/api/librarian/getItem/${borrowedItem.itemId}`, {
                 headers: {
@@ -44,6 +59,7 @@ const ExtCard = ({ borrowedItem }) => {
         }
         getItem()
         getReader()
+        getEmail()
     }, [])
 
     const handleApprove = async () => {
@@ -103,21 +119,32 @@ const ExtCard = ({ borrowedItem }) => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '10px',
+                padding: '15px',
                 margin: '10px',
                 width: '400px',
-                height: '300px',
                 borderRadius: '10px',
             }}
         >
             <Stack direction='column' spacing={1} alignItems='center'>
-            {readerName && <Typography variant='h4'>Reader: {readerName}</Typography>}
-            {itemName && <Typography variant='h4'>Item: {itemName}</Typography>}
-            <Typography variant='h6'>Current Due Date: {dueDate.substring(0,10)}</Typography>
-            <Typography variant='h6'>Requested Due Date: {newDueDate.substring(0,10)}</Typography>
+            <Typography sx={{fontFamily: 'Poppins', fontSize: '16px'}}>Item: </Typography>
+            {itemName && <Typography variant='h4' sx={{fontFamily: 'Poppins', color:'black', fontWeight: '600'}}>{itemName}</Typography>}
+            <Stack direction='row' spacing={5} alignItems='center'>
+            <Stack direction='column' spacing={0.5} alignItems='center'>
+            <Typography sx={{fontFamily: 'Poppins', fontSize: '16px'}}>Reader name: </Typography>
+            {readerName && <Typography variant='h4' sx={{fontFamily: 'Poppins', color:'black', fontWeight: '600'}}>{readerName}</Typography>}
+            </Stack>
+            <Stack direction='column' spacing={0.5} alignItems='center'>
+            <Typography sx={{fontFamily: 'Poppins', fontSize: '16px'}}>Reader Email: </Typography>
+            {readerEmail && <Typography variant='h4' sx={{fontFamily: 'Poppins', color:'black', fontWeight: '600', fontSize: '24px'}}>{readerEmail}</Typography>}
+            </Stack>
+            </Stack>
+            <Typography variant='h6' sx={{fontFamily: 'Poppins', fontSize: '16px'}}>Current Due Date: </Typography>
+            <Typography variant='h6' sx={{fontFamily: 'Poppins', color:'black', fontWeight: '600'}}>{dueDate.substring(0,10)}</Typography>
+            <Typography variant='h6' sx={{fontFamily: 'Poppins', fontSize: '16px'}}>Requested Due Date: </Typography>
+            <Typography variant='h6' sx={{fontFamily: 'Poppins', color:'black', fontWeight: '600'}}>{newDueDate.substring(0,10)}</Typography>
             <Stack direction='row' spacing={2}>
-                <Button variant='contained' color='success' disabled={disabled} onClick={handleApprove}>Approve</Button>
-                <Button variant='contained' color='warning' disabled={disabled} onClick={handleDeny}>Deny</Button>
+                <Button variant='outlined' sx={{background:'black', color: 'white', borderColor:'black', '&:hover':{background:'black', color: 'white', borderColor:'black'}}} disabled={disabled} onClick={handleApprove}>GRANT</Button>
+                <Button variant='outlined' sx={{background:'white', color:'black', borderWidth: '1px', borderColor:'black', '&:hover':{background:'white', color: 'black',borderWidth: '1px', borderColor:'black',}}} disabled={disabled} onClick={handleDeny}>Deny</Button>
             </Stack>
             {error && <Alert severity='error'>{error}</Alert>}
             {success && <Alert severity='success'>{success}</Alert>}

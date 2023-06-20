@@ -251,6 +251,7 @@ const handleThirdStep = async () => {
                 onChange={(e) => setReader(e.target.value)}
                 required
                 value={reader}
+                sx={{backgroundColor: 'white'}}
                 />
                 <TextField label="due date" variant="outlined" type="date"
                 onChange={(e) => setReturnDate(e.target.value)}
@@ -270,6 +271,7 @@ const handleThirdStep = async () => {
                 onChange={(e) => setReader(e.target.value)}
                 required
                 value={reader}
+                sx={{backgroundColor: 'white'}}
                 />
                 </Box>
 

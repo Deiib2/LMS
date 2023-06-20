@@ -7,7 +7,7 @@ const ItemCard = ({item}) => {
     const book = item.title === 'Rich Dad, Poor Dad' ? richdad : item.title === 'The Lord of the Rings' ? lotr : bookCover
     return (
         <Card elevation={4}>
-            <CardMedia component="img" height="260" image={book} alt="book cover"
+            <CardMedia component="img" height="260" image= {!item.imageUrl ? lotr : item.imageUrl} alt="book cover"
                 sx={{ objectFit: "contain", margin: "5px" }}
             />
             <CardContent >

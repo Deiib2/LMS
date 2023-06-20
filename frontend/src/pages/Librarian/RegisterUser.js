@@ -33,7 +33,7 @@ const RegisterUser = () => {
             }
             setLoading(false)
         }
-        if(type==="reader"){
+        else if(type==="reader"){
             setLoading(true)
             const response = await fetch('/api/librarian/registerReader', {
                 method: 'POST',
@@ -54,46 +54,50 @@ const RegisterUser = () => {
                 setSuccess(null)
             }
             setLoading(false)
+        } else {
+            setError("Please select a user type")
+            setSuccess(null)
         }
     }
 
     return (
         <Box sx={{ 
             display: 'flex',
-            justifyContent: 'center',
+            flexDirection: 'column',
             alignItems: 'center',
-            width: '100%',
-            paddingTop: '30px'
-
         }}>
-            <Card sx={{padding: '20px', width:'400px', height:'500px', borderRadius:'20px'}}>
-                <Stack direction="column" spacing={2} >
-                    <Typography variant="h3" alignSelf="center">Register User</Typography>
-                    <TextField value={name} label="Name" variant="outlined"
+            <Typography variant="h3" sx={{marginBottom: '1rem', fontFamily: "Poppins", py: '20px'}}>Register User</Typography>
+                <Stack direction="column" spacing={2} sx={{width: '50%', mb:'20px'}}>
+                    
+                    <TextField value={name} label="Name" variant="outlined" sx={{backgroundColor: '#fff'}} required
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <TextField value={email} label="Email" variant="outlined" 
+                    <TextField value={email} label="Email" variant="outlined" sx={{backgroundColor: '#fff'}} required
                         onChange={(e) => setEmail(e.target.value)}   
                         />
-                    <TextField value={password} type="password" label="Password" variant="outlined" 
+                    <TextField value={password} type="password" label="Password" variant="outlined" sx={{backgroundColor: '#fff'}} required
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-label">User Type</InputLabel>
                     <Select 
+                        required
                         label="User Type"
                         value={type}
                         onChange={(e) => setType(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
                     >
                         <MenuItem value="librarian">Librarian</MenuItem>
                         <MenuItem value="reader">Reader</MenuItem>
                     </Select>
                     </FormControl>
-                    <Button disabled={loading} onClick={handleSubmit}>Register User</Button>
+                    <Button variant='contained' disabled={loading} sx={{background:'black', '&:hover': {
+                    background: 'black',},}} onClick={handleSubmit}>
+                        Register
+                        </Button>
                     {error && <Alert severity="error">{error}</Alert>}
                     {success && <Alert severity="success">{success}</Alert>}
                 </Stack>
-            </Card>
         </Box>
     )
 }

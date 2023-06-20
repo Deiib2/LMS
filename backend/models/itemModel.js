@@ -5,6 +5,10 @@ const itemSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    imageUrl: {
+        type: String,
+        required: false
+    },
     type: {
         type: String,
         required: true

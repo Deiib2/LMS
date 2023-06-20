@@ -4,6 +4,7 @@ import { useState } from 'react'
 const CreateItem = () => {
     const [title, setTitle] = useState('')
     const [type, setType] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
     const [description, setDescription] = useState('')
     const [author, setAuthor] = useState('')
     const [totalCopies, setTotalCopies] = useState('')
@@ -20,6 +21,7 @@ const CreateItem = () => {
             body: JSON.stringify({
                 title,
                 type,
+                imageUrl,
                 description,
                 author,
                 totalCopies
@@ -30,6 +32,7 @@ const CreateItem = () => {
             setSuccess(`"${title}" ${type} created successfully`)
             setTitle('')
             setType('')
+            setImageUrl('')
             setDescription('')
             setAuthor('')
             setTotalCopies('')
@@ -41,16 +44,16 @@ const CreateItem = () => {
         }
     }
     return(
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
-            <Paper elevation={3} sx={{padding: '2rem', width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderRadius: '20px'}}>
-                <Typography variant='h3' sx={{marginBottom: '1rem'}}>Create a new Item</Typography>
-                <Stack spacing={2} sx={{width: '100%'}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center',  height: '90vh', pb:'2rem'}}>
+                <Typography variant='h3' sx={{marginBottom: '1rem', fontFamily: "Poppins", py: '20px'}}>Create a new Item</Typography>
+                <Stack spacing={2} sx={{width: '50%', mb:'20px'}}>
                     <TextField 
                         required
                         label='Title'
                         variant='outlined'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
                     />
                     <TextField
                         required
@@ -58,6 +61,15 @@ const CreateItem = () => {
                         variant='outlined'
                         value={type}
                         onChange={(e) => setType(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
+                    />
+                    <TextField 
+                        required
+                        label='Image URL'
+                        variant='outlined'
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
                     />
                     <TextField
                         required
@@ -65,6 +77,7 @@ const CreateItem = () => {
                         variant='outlined'
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
                     />
                     <TextField
                         required
@@ -72,6 +85,7 @@ const CreateItem = () => {
                         variant='outlined'
                         value={author}
                         onChange={(e) => setAuthor(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
                     />
                     <TextField
                         required
@@ -80,12 +94,15 @@ const CreateItem = () => {
                         variant='outlined'
                         value={totalCopies}
                         onChange={(e) => setTotalCopies(e.target.value)}
+                        sx={{backgroundColor: '#fff'}}
                     />
-                    <Button variant='contained' onClick={handleSubmit}>Create</Button>
+                    <Button variant='contained' sx={{background:'black', '&:hover': {
+                    background: 'black',
+                    },}} 
+                    onClick={handleSubmit}>Create</Button>
                 </Stack>
                 {error && <Alert severity='error'>{error}</Alert>}
                 {success && <Alert severity='success'>{success}</Alert>}
-            </Paper>
         </Box>
     )
 }

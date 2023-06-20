@@ -7,11 +7,12 @@ const User = require('../models/userModel')
 const Reader = require('../models/readerModel')
 
 const createNewItem = async (req, res) => {
-    const {title, type, description, author, totalCopies} = req.body;
+    const {title, type, imageUrl, description, author, totalCopies} = req.body;
     try{
         const newItem = await Item.create({
             title,
             type,
+            imageUrl,
             description,
             author,
             totalCopies
@@ -19,6 +20,7 @@ const createNewItem = async (req, res) => {
         res.status(200).json(newItem)
     } catch (error) {
         res.status(400).json({error: error.message})
+        console.log(error)
     }
 }
 

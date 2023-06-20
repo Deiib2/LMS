@@ -30,16 +30,18 @@ const MyItems = () => {
         getItems()
     }, [user])
     return (
-        <Box sx={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', paddingTop:'15px', paddingX:'10px'}}>
+        <Box sx={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', paddingY:'15px', paddingX:'10px'}}>
+            <Box sx={{width: '75%', pt:'2rem'}}>
             {loading && <CircularProgress size='5rem' />}
             {error && <Alert severity='error'>{error}</Alert>}
             <Grid container spacing={2}>
                 {items.map(item => (
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <Grid item xs={12} sm={6} md={4} lg={4}>
                         <BorrowedItemCard item={item}/>
                     </Grid>
                 ))}
             </Grid>
+            </Box>
         </Box>
     )
 }

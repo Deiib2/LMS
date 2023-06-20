@@ -31,9 +31,7 @@ const ExtensionRequests = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            padding: '10px',
-            width: '100%'
+            paddingY: '10px',
         }}>
             <h1>Extension Requests</h1>
             {loading && <CircularProgress size='5rem' />}

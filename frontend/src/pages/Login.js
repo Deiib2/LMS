@@ -2,6 +2,7 @@ import { Box, Button, Card, Stack, TextField, Typography, Alert } from "@mui/mat
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
+import { Lock, LockOutlined } from "@mui/icons-material";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -23,19 +24,19 @@ const Login = () => {
             paddingTop: '30px'
 
         }}>
-            <Card sx={{padding: '20px', width:'300px', height:'400px', borderRadius:'20px'}}>
-                <Stack direction="column" spacing={3} >
-                    <Typography variant="h3" alignSelf="center">Login</Typography>
-                    <TextField value={email} label="Email" variant="outlined" 
+                <Stack direction="column" spacing={2} alignItems='center' width='300px'>
+                    <Lock sx={{fontSize: '150px'}}/>
+                    <TextField value={email} label="Email Address" fullWidth variant="outlined" sx={{background: 'white'}}
                         onChange={(e) => setEmail(e.target.value)}   
                         />
-                    <TextField value={password} type="password" label="Password" variant="outlined" 
+                    <TextField value={password} type="password" label="Password" fullWidth variant="outlined" sx={{background: 'white'}}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button disabled={loading} variant="contained" onClick={handleSubmit}>Login</Button>
+                    <Button disabled={loading} fullWidth variant="contained" onClick={handleSubmit} 
+                    sx={{background:'black', height:'50px', '&:hover':{background:'black'}}}>
+                        Login</Button>
                     {error && <Alert severity="error">{error}</Alert>}
                 </Stack>
-            </Card>
         </Box>
     );
 }
