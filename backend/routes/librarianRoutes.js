@@ -13,7 +13,8 @@ const {
     grantExtension,
     denyExtension,
     getItemById,
-    getUserEmail
+    getUserEmail,
+    getReaderByEmail
     } = require('../controllers/librarianController')
 
 const router = express.Router()
@@ -32,5 +33,6 @@ router.put('/grantExtension', grantExtension)
 router.put('/denyExtension', denyExtension)
 router.get('/getItem/:itemId', getItemById)
 router.get('/getUserEmail/:userId', getUserEmail)
+router.get('/getReaderByEmail/:email', getReaderByEmail)
 
 module.exports = router

@@ -31,8 +31,8 @@ const MyItems = () => {
     }, [user])
     return (
         <Box sx={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', paddingY:'15px', paddingX:'10px'}}>
-            <Box sx={{width: '75%', pt:'2rem'}}>
             {loading && <CircularProgress size='5rem' />}
+            <Box sx={{width: '75%', pt:'2rem'}}>
             {error && <Alert severity='error'>{error}</Alert>}
             <Grid container spacing={2}>
                 {items.map(item => (

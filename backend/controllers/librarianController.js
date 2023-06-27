@@ -201,6 +201,17 @@ const getUserEmail = async (req, res) => {
         res.status(400).json({error: error.message})
     }
 }
+const getReaderByEmail = async (req, res) => {
+    const {email} = req.params;
+    try{
+        const reader = await User.findOne({email: email})
+        if(!reader)
+            res.status(404).json({error: 'Reader not found'})
+        res.status(200).json(reader)
+    } catch (error) {
+        res.status(400).json({error: 'There was an error'})
+    }
+}
 
 module.exports = {
     createNewItem,
@@ -216,5 +227,6 @@ module.exports = {
     grantExtension,
     denyExtension,
     getItemById,
-    getUserEmail
+    getUserEmail,
+    getReaderByEmail
 }

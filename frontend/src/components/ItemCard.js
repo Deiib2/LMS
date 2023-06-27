@@ -2,12 +2,13 @@ import {Box, Card, CardContent, CardMedia, Typography} from '@mui/material'
 import bookCover from '../images/bookcover.jpg'
 import richdad from '../images/Rich_dad_cover.jpg'
 import lotr from '../images/lotr_cover.jpg'
+import bookco from '../images/BookCoverNotFound.jpg'
 
 const ItemCard = ({item}) => {
     const book = item.title === 'Rich Dad, Poor Dad' ? richdad : item.title === 'The Lord of the Rings' ? lotr : bookCover
     return (
         <Card elevation={4}>
-            <CardMedia component="img" height="260" image= {!item.imageUrl ? lotr : item.imageUrl} alt="book cover"
+            <CardMedia component="img" height="260" image= {!item.imageUrl ? bookco : item.imageUrl} alt="book cover"
                 sx={{ objectFit: "contain", margin: "5px" }}
             />
             <CardContent >

@@ -1,4 +1,4 @@
-import { Alert, Box, Paper, Stack, Typography, TextField, Button } from '@mui/material'
+import { Alert, Box, Stack, Typography, TextField, Button } from '@mui/material'
 import { useState } from 'react'
 
 const CreateItem = () => {
@@ -44,7 +44,7 @@ const CreateItem = () => {
         }
     }
     return(
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center',  height: '90vh', pb:'2rem'}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center',  height: '90vh', pb:'2rem', mb:'2rem'}}>
                 <Typography variant='h3' sx={{marginBottom: '1rem', fontFamily: "Poppins", py: '20px'}}>Create a new Item</Typography>
                 <Stack spacing={2} sx={{width: '50%', mb:'20px'}}>
                     <TextField 
@@ -101,8 +101,8 @@ const CreateItem = () => {
                     },}} 
                     onClick={handleSubmit}>Create</Button>
                 </Stack>
-                {error && <Alert severity='error'>{error}</Alert>}
-                {success && <Alert severity='success'>{success}</Alert>}
+                {error && <Alert severity='error' sx={{mb:'2rem'}}>{error}</Alert>}
+                {success && <Alert severity='success' sx={{mb:'2rem'}}>{success}</Alert>}
         </Box>
     )
 }

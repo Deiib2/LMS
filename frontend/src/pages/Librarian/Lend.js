@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Alert, Stack, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import ItemCard from '../../components/ItemCard';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 const steps = ['Select book', 'Lend/Return', 'Select reader', 'Confirm'];
@@ -32,7 +33,7 @@ const Lend = () => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -43,27 +44,27 @@ const Lend = () => {
             setError('Please enter an ID/ISBN')
             return
         }
-        handleFirstStep();
+        await handleFirstStep();
     }
     if(activeStep === 2){
         if(reader === ''){
             setError('Please enter a reader ID')
             return
         }
-        handleThirdStep();
+        await handleThirdStep();
     }
     if(activeStep === 3){
         if(lend){
-            handleFinalStep();
+            await handleFinalStep();
         }else{
-            handleFinalStepReturn();
+            await handleFinalStepReturn();
         }
         
     }
     console.log(lend)
     if(!error){
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setSkipped(newSkipped);
     console.log('hiiiii')
     }
     console.log(error)
@@ -120,7 +121,7 @@ const Lend = () => {
             'Authorization': `Bearer ${user.token}`
         },
         body: JSON.stringify({
-            readerId: reader,
+            readerId: readeri._id,
             itemId: item,
             returnDate: returnDate
         })
@@ -143,7 +144,7 @@ const handleFinalStepReturn = async () => {
             'Authorization': `Bearer ${user.token}`
         },
         body: JSON.stringify({
-            readerId: reader,
+            readerId: readeri._id,
             itemId: item
         })
     })
@@ -158,7 +159,7 @@ const handleFinalStepReturn = async () => {
     }
 }
 const handleThirdStep = async () => {
-    const response = await fetch('/api/librarian/getReader/'+reader)
+    const response = await fetch('/api/librarian/getReaderByEmail/'+reader)
     const json = await response.json()
     console.log(json)
     if(response.ok){
@@ -195,11 +196,14 @@ const handleThirdStep = async () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
+          <Box sx={{width: '100%', display: 'flex', flexDirection:'column', alignItems: 'center', justifyContent: 'center'}}>
+          {success && <TaskAltIcon sx={{ fontSize: 300, color: '#007700', alignSelf: 'center' }} /> }
           {success && lend && <Alert severity="success">Item successfully lent!</Alert>}
           {success && !lend && <Alert severity="success">Item successfully returned!</Alert>}
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
             <Button onClick={handleReset}>Reset</Button>
+          </Box>
           </Box>
         </React.Fragment>
       ) : (
@@ -245,9 +249,9 @@ const handleThirdStep = async () => {
                 <Box sx={{width: '100%', alignItems:'center',
                 display: 'flex', flexDirection: 'column', pt: 2,
                 }}>
-                <Typography sx={{ mt: 2, mb: 1 }}>Please enter the reader ID</Typography>
+                <Typography sx={{ mt: 2, mb: 1 }}>Please enter the reader email</Typography>
                 <Stack spacing={2} width='300px'>
-                <TextField label="reader ID" variant="outlined"
+                <TextField label="Reader Email" variant="outlined"
                 onChange={(e) => setReader(e.target.value)}
                 required
                 value={reader}
@@ -266,15 +270,14 @@ const handleThirdStep = async () => {
                 <Box sx={{width: '100%', alignItems:'center',
                 display: 'flex', flexDirection: 'column', pt: 2,
                 }}>
-                    <Typography sx={{ mt: 2, mb: 1 }}>Please enter the reader ID</Typography>
-                    <TextField label="reader ID" variant="outlined"
+                    <Typography sx={{ mt: 2, mb: 1 }}>Please enter the reader email</Typography>
+                    <TextField label="Reader Email" variant="outlined"
                 onChange={(e) => setReader(e.target.value)}
                 required
                 value={reader}
                 sx={{backgroundColor: 'white'}}
                 />
                 </Box>
-
             }
             {
                 activeStep === 3 && itemi && readeri && 
@@ -285,7 +288,7 @@ const handleThirdStep = async () => {
                     <Typography sx={{ mt: 2, mb: 1 }}>Lending the below item to </Typography> : 
                     <Typography sx={{ mt: 2, mb: 1 }}>Setting the below item as returned by </Typography>
                     }
-                    <Typography sx={{ mb: 1 }}>{readeri.name}</Typography>
+                    <Typography sx={{ mb: 1, fontFamily: 'Poppins', fontSize:'26px' }}>{readeri.email}</Typography>
                     <Box sx={{width:'300px'}}>
                     <ItemCard item={itemi}/>
                     </Box>

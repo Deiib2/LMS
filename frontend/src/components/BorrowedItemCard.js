@@ -5,6 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, DialogContentText } from '@mui/material'
+import bookco from '../images/BookCoverNotFound.jpg'
 
 const BorrowedItemCard = ({item}) => {
     const [dueDate, setDueDate] = useState('')
@@ -71,7 +72,7 @@ const BorrowedItemCard = ({item}) => {
     }, [])
     return (
         <Card>
-            <CardMedia component="img" height="260" image={bookCover} alt="book cover"
+            <CardMedia component="img" height="260" image= {!item.imageUrl ? bookco : item.imageUrl} alt="book cover"
                 sx={{ objectFit: "contain", margin: "5px" }}
             />
             <CardContent>

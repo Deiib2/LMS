@@ -14,9 +14,11 @@ const Explore = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [first, setFirst] = useState(true);
     const handleChange = (event, value) => {
-        setPage(value);
-        setLoading(true);
-        setItems([]);
+        if(page!==value){
+            setPage(value);
+            setLoading(true);
+            setItems([]);
+        }
     };
 
     useEffect(() => {
@@ -67,7 +69,7 @@ const Explore = () => {
             label='Search'
             variant='outlined' 
             sx={{backgroundColor: 'white', width: '50%', mb: 3}}
-            onChange={(e) => {setSearch(e.target.value); setPage(1); setItems([]) }}
+            onChange={(e) => {setSearch(e.target.value); setPage(1); setItems([]); setLoading(true); }}
             
             />
             {loading && <CircularProgress size='5rem'/>}

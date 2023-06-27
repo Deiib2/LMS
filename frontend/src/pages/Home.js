@@ -12,7 +12,7 @@ const Home = () => {
     return(
         <div className="home">
             <h1>Library Management System</h1>
-            <h2>Welcome, {user && user.email}</h2>
+            <h2>Welcome to the LibraryMS</h2>
             <hr/>
             <Stack direction="row" spacing={5}>
                 <HomeNavButton text="Explore" link='/explore' icon= {FaSearch} />
